@@ -1,0 +1,810 @@
+@use './components/_colors' as c;
+
+*,
+*::after,
+*::before {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+	scroll-behavior: smooth;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	font-family: 'Lato', sans-serif;
+	font-size: 1.6rem;
+	background-color: c.$first-bg-color;
+	color: c.$text-color;
+}
+
+button {
+	background: none;
+	border: 1px solid transparent;
+	cursor: pointer;
+}
+
+a {
+	text-decoration: none;
+}
+
+input,
+select {
+	padding: 1rem;
+	background: none;
+	border: 1px solid c.$text-color;
+	color: c.$text-color;
+	width: 100%;
+	max-width: 500px;
+	text-align: center;
+	border-radius: 10px;
+
+	option {
+		background: c.$second-bg-color;
+		&:first-of-type {
+			color: gray;
+		}
+	}
+}
+
+select {
+	appearance: none;
+}
+
+::-webkit-calendar-picker-indicator {
+	background-color: c.$text-color;
+	border-radius: 25px;
+}
+
+.btn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: c.$second-text-color;
+	font-size: 2rem;
+	width: 4rem;
+	height: 4rem;
+	border-radius: 10px;
+	background-color: c.$second-bg-color;
+}
+
+.green {
+	background-color: c.$green;
+}
+
+.blue {
+	background-color: c.$main-color;
+}
+
+.red {
+	background-color: c.$red;
+}
+
+.yellow {
+	background-color: c.$yellow;
+}
+
+.wrapper {
+	max-width: 1440px;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.position-fixed {
+	position: fixed;
+	top: 0;
+}
+
+.error {
+	color: c.$red;
+	text-align: center;
+	font-size: 1.3rem;
+}
+
+.nav {
+	padding: 1rem 2rem;
+	width: 100%;
+	background-color: c.$second-bg-color;
+	.wrapper {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	&--title {
+		display: none;
+	}
+
+	&--menu {
+		position: relative;
+		width: 5rem;
+		height: 5rem;
+
+		.bars {
+			&::after,
+			&::before {
+				content: '';
+			}
+			&::after,
+			&::before,
+			& {
+				position: absolute;
+				left: 50%;
+				transform: translate(-50%);
+				width: 3rem;
+				height: 1px;
+				background-color: c.$text-color;
+			}
+			&::after {
+				top: 1rem;
+			}
+
+			&::before {
+				bottom: 1rem;
+			}
+		}
+	}
+
+	.show {
+		display: flex;
+	}
+
+	.active {
+		color: c.$main-color;
+	}
+
+	&--links {
+		a {
+			position: relative;
+			text-decoration: none;
+			color: c.$text-color;
+			text-transform: uppercase;
+			transition: color 0.3s;
+		}
+
+		a:hover {
+			color: c.$main-color;
+		}
+
+		&__desktop {
+			display: none;
+			a {
+				&:hover {
+					&::before {
+						content: '';
+						position: absolute;
+						width: 100%;
+						bottom: -5px;
+						height: 1px;
+						background-color: c.$main-color;
+					}
+				}
+			}
+		}
+
+		&__mobile {
+			display: none;
+			flex-direction: column;
+			a {
+				width: 100%;
+				text-align: center;
+				padding: 2rem 0;
+			}
+		}
+	}
+
+	&--profile {
+		img {
+			width: 4rem;
+			height: 4rem;
+			object-fit: cover;
+			object-position: center;
+			border-radius: 50%;
+			border: 3px solid c.$text-color;
+			transition: border 0.4s;
+
+			&:hover {
+				border: 3px solid c.$main-color;
+			}
+		}
+	}
+}
+
+.main {
+	overflow: auto;
+	height: 100vh;
+	.no-tasks {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+
+		.box {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		img {
+			width: 25rem;
+		}
+
+		p {
+			text-align: center;
+			font-size: 2rem;
+			&:nth-of-type(2) {
+				font-size: 1.6rem;
+			}
+		}
+	}
+
+	.tasks {
+		.find-box {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+			padding: 3rem;
+			justify-content: center;
+
+			h2 {
+				font-size: 1.8rem;
+				font-weight: normal;
+			}
+		}
+
+		.card-box {
+			display: flex;
+			justify-content: center;
+			gap: 4rem;
+			flex-wrap: wrap;
+			padding: 2rem;
+			.card {
+				padding: 2rem;
+				max-width: 300px;
+				display: flex;
+				text-align: center;
+				align-items: center;
+				flex-direction: column;
+				gap: 1rem;
+				border: 10px solid c.$main-color;
+				border-radius: 30px;
+				span {
+					color: c.$main-color;
+				}
+
+				&--middle {
+					p {
+						padding: 0.5rem 0;
+					}
+				}
+
+				&--bottom {
+					display: flex;
+					gap: 1rem;
+				}
+
+				&__done {
+					border: 10px solid c.$red;
+
+					.card--top {
+						p {
+							text-decoration: line-through;
+						}
+					}
+
+					span {
+						color: c.$red;
+					}
+				}
+
+				&__late {
+					border: 10px solid c.$yellow;
+
+					span {
+						color: c.$yellow;
+					}
+				}
+			}
+		}
+	}
+
+	.add {
+		display: flex;
+		align-items: center;
+		height: 100%;
+		form {
+			padding: 2rem;
+			display: flex;
+			gap: 1.2rem;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			width: 100%;
+			height: 100%;
+
+			p {
+				font-weight: bold;
+				span {
+					color: c.$red;
+				}
+			}
+
+			a {
+				position: relative;
+				color: c.$text-color;
+				&::before,
+				&::after {
+					position: absolute;
+					width: 0%;
+					height: 1px;
+					background-color: c.$text-color;
+					bottom: -4px;
+					transition: width 0.3s;
+					content: '';
+				}
+				&::after {
+					right: 0;
+				}
+				&:hover {
+					&::before,
+					&::after {
+						width: 50%;
+					}
+					&::after {
+						width: 50%;
+					}
+				}
+			}
+
+			button {
+				padding: 1rem 3rem;
+				border-radius: 10px;
+				background-color: c.$main-color;
+				color: c.$second-text-color;
+			}
+		}
+	}
+
+	.login {
+		display: flex;
+		align-items: center;
+		height: 100%;
+		.box {
+			padding: 2rem;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			width: 100%;
+		}
+
+		h1 {
+			font-size: 4rem;
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			width: 100%;
+			gap: 1.6rem;
+		}
+		span {
+			color: c.$red;
+		}
+
+		img {
+			width: 25rem;
+		}
+
+		a {
+			text-decoration: underline;
+			color: c.$text-color;
+		}
+
+		button {
+			margin-top: 2rem;
+			padding: 2rem 3rem;
+			font-size: 2rem;
+			border-radius: 25px;
+			background-color: c.$main-color;
+		}
+
+		&__signup {
+			h1 {
+				font-size: 3rem;
+				margin-bottom: 2rem;
+			}
+		}
+	}
+
+	.profile {
+		display: flex;
+		gap: 0.5rem;
+		height: 100%;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		h1 {
+			font-size: 4rem;
+		}
+
+		img {
+			object-fit: cover;
+			object-position: center;
+			width: 20rem;
+			height: 20rem;
+			border-radius: 25px;
+		}
+
+		.btn2 {
+			padding: 1.5rem 3rem;
+			border-radius: 25px;
+			color: c.$second-text-color;
+			background-color: c.$main-color;
+		}
+
+		&__edit {
+			span {
+				color: c.$red;
+			}
+			img {
+				width: 20rem;
+				height: 20rem;
+			}
+			form {
+				display: flex;
+				flex-direction: column;
+				gap: 0.4rem;
+			}
+		}
+	}
+
+	.statistics {
+		height: 100%;
+		.card-box {
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			padding: 2rem;
+			.card {
+				padding: 2rem;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				font-size: 2rem;
+				width: 100%;
+				border-radius: 25px;
+				color: c.$second-text-color;
+			}
+		}
+	}
+}
+
+.settings {
+	position: relative;
+	width: 100%;
+	height: 5rem;
+	background-color: c.$second-bg-color;
+	.circle {
+		position: absolute;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 6rem;
+		height: 6rem;
+		background-color: c.$second-bg-color;
+		border-radius: 50%;
+		i {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			font-size: 6rem;
+			color: c.$text-color;
+		}
+	}
+}
+
+.header {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	.bg-image {
+		position: absolute;
+		top: 0;
+		height: 100%;
+		width: 100%;
+		background-size: cover;
+		background-position: center;
+		background-image: url('../img/small-bg.jpg');
+
+		.bg-shadow {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: absolute;
+			left: 0;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			background-color: rgba(0, 0, 0, 0.8);
+
+			.text-box {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 2rem;
+				text-align: center;
+				h1 {
+					color: c.$main-color;
+				}
+
+				.btn-2 {
+					padding: 2rem 4rem;
+					color: c.$text-color;
+					border: 2px solid c.$main-color;
+					border-radius: 20px;
+				}
+			}
+		}
+	}
+}
+
+@media (min-width: 576px) {
+	.nav {
+		padding: 3rem;
+
+		&--menu {
+			.bars {
+				&::after,
+				&::before,
+				& {
+					width: 4rem;
+				}
+				&::after {
+					top: 1.5rem;
+				}
+				&::before {
+					bottom: 1.5rem;
+				}
+			}
+		}
+
+		&--links {
+			font-size: 2rem;
+		}
+
+		&--profile {
+			img {
+				width: 5rem;
+				height: 5rem;
+			}
+		}
+	}
+
+	.main {
+		.no-tasks {
+			img {
+				width: 40rem;
+			}
+			p {
+				font-size: 4rem;
+				&:nth-of-type(2) {
+					font-size: 2.5rem;
+				}
+			}
+		}
+
+		.tasks {
+			.find-box {
+				h2 {
+					font-size: 4rem;
+				}
+			}
+		}
+
+		.login {
+			img {
+				width: 35rem;
+			}
+			p {
+				font-size: 3rem;
+			}
+			input {
+				font-size: 2rem;
+			}
+			a {
+				font-size: 2rem;
+			}
+			button {
+				padding: 2rem 4rem;
+			}
+
+			&__signup {
+				h1 {
+					font-size: 5rem;
+					margin-bottom: 2rem;
+				}
+			}
+		}
+		.profile {
+			gap: 1.5rem;
+			h1 {
+				font-size: 5rem;
+			}
+
+			img {
+				width: 35rem;
+				height: 35rem;
+				border-radius: 25px;
+			}
+
+			h2 {
+				font-size: 3rem;
+			}
+
+			.btn2 {
+				padding: 1.5rem 4rem;
+			}
+			&__edit {
+				img {
+					width: 25rem;
+					height: 25rem;
+				}
+				form {
+					gap: 1rem;
+				}
+			}
+		}
+	}
+
+	.header {
+		.bg-image {
+			.bg-shadow {
+				.text-box {
+					h1 {
+						color: c.$main-color;
+						font-size: 6rem;
+					}
+
+					p {
+						font-size: 2rem;
+					}
+
+					.btn-2 {
+						padding: 2rem 4rem;
+						font-size: 3rem;
+						color: c.$text-color;
+						border: 2px solid c.$main-color;
+						border-radius: 20px;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (min-width: 768px) {
+	.nav {
+		&--title {
+			display: block;
+			color: c.$main-color;
+			font-size: 3rem;
+		}
+
+		&--menu {
+			display: none;
+		}
+
+		&--links {
+			&__desktop {
+				display: flex;
+				justify-content: space-around;
+				width: 60%;
+			}
+			&__mobile {
+				display: none !important;
+			}
+		}
+
+		&--profile {
+			img {
+				width: 6rem;
+				height: 6rem;
+			}
+		}
+	}
+
+	.position-fixed {
+		position: relative;
+	}
+
+	.main {
+		.no-tasks {
+			img {
+				width: 60rem;
+			}
+			p {
+				font-size: 5rem;
+				&:nth-of-type(2) {
+					font-size: 3rem;
+				}
+			}
+		}
+		.tasks {
+			.find-box {
+				h2 {
+					font-size: 7rem;
+				}
+
+				.btn {
+					width: 7rem;
+					height: 7rem;
+					i {
+						font-size: 3rem;
+					}
+				}
+			}
+		}
+
+		.add {
+			form {
+				gap: 1.5rem;
+
+				button {
+					font-size: 2.5rem;
+				}
+			}
+		}
+		.statistics {
+			.card-box {
+				padding: 4rem;
+				.card {
+					padding: 2.5rem;
+					font-size: 4rem;
+					color: c.$second-text-color;
+				}
+			}
+		}
+	}
+	.settings {
+		height: 8rem;
+		.circle {
+			width: 8rem;
+			height: 8rem;
+			i {
+				font-size: 8rem;
+			}
+		}
+	}
+
+	.header {
+		.bg-image {
+			.bg-shadow {
+				.text-box {
+					h1 {
+						color: c.$main-color;
+						font-size: 8rem;
+					}
+
+					p {
+						font-size: 3rem;
+					}
+
+					.btn-2 {
+						padding: 2rem 4rem;
+						font-size: 3rem;
+						color: c.$text-color;
+						border: 2px solid c.$main-color;
+						border-radius: 20px;
+					}
+				}
+			}
+		}
+	}
+}
